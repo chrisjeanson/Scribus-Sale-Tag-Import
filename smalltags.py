@@ -1,5 +1,5 @@
 """
-Script Name: Scribus Sale Tag Importer
+Script Name: Scribus Small Sale Tag Importer
 
 Description: This script retrieves product sale price and upc for quick
 tagging of said product. This script will create tags for any listed on 
@@ -9,14 +9,14 @@ Requirements:
 Data CSV that has 3 columns: qty, sale price, and upc. The included Scribus 
 document is already configured to work with the script. 
 
-Scribus 1.6x or above (could work on previous versions as well), some
+Scribus 1.61 or above (could work on previous versions as well), some
 sort of software to create/manipulate csv files.
 
 Set an environment variable for the location of your data file called 'SCRIBUS_DATA_PATH'.
 Or, conversely, manually enter a file path in place of the environment variable.
 
-Usage: Load up the document.sla file in Scribus. Then use Script > Execute Script... 
-to select the scribus.py script. It will replace
+Usage: Load up the smalltags.sla file in Scribus. Then use Script > Execute Script... 
+to select the smalltags.py script. It can take approximatel 90 seconds per page.
 
 License: MIT License
 
@@ -126,7 +126,7 @@ def clear_tag(row, col):
         scribus.deleteText(upc_frame_name)
 
 # Read the CSV file using an environment variable
-data_file_path = os.path.join(os.getenv('SCRIBUS_DATA_PATH', 'default_path_if_not_set'), 'data.csv')
+data_file_path = os.path.join(os.getenv('SCRIBUS_DATA_PATH', 'default_path_if_not_set'), 'smalltags.csv')
 
 with open(data_file_path, 'r') as csvfile:
     datareader = csv.reader(csvfile)
