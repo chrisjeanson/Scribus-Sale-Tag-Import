@@ -140,7 +140,8 @@ with open(data_file_path, 'r') as csvfile:
     for data in datareader:
         qty, price, upc = data[:3]
 
-        for _ in range(int(qty)):
+        for i in range(int(qty)):
+            # Check if we need a new page before placing the next tag
             if tags_filled >= total_tags_per_page:
                 # Add a new page
                 scribus.newPage(-1)  # -1 appends the page at the end
@@ -149,6 +150,7 @@ with open(data_file_path, 'r') as csvfile:
                 col = 1
                 tags_filled = 0  # Reset the counter for the new page
 
+            # Place the new tag
             new_element_names = duplicate_template(row, col, data)
             update_tag_data(row, col, data, new_element_names)
             tags_filled += 1
@@ -158,13 +160,9 @@ with open(data_file_path, 'r') as csvfile:
             if col > 8:  # Assuming 8 columns per page
                 col = 1
                 row += 1
-                if row > 7:  # Assuming 7 rows per page, reset for the new page
-                    row = 1
-                    col = 1
-                    scribus.newPage(-1)
-                    current_page += 1
-                    tags_filled = 0
-    
+                if row > 7:  # Assuming 7 rows per page
+                    row = 1  # Reset the row for the new page, col is already 1
+
     # Clear remaining tags if not all are filled
     while tags_filled < total_tags_per_page:
         clear_tag(row, col)
